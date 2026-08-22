@@ -24,3 +24,19 @@
 
 1. Соберите образ `docker build --build-arg domain={domain} -t lampa . `
 2. Запустите контейнер `docker run -p 8080:80 -d --restart unless-stopped -it --name lampa lampa`
+
+## Мой локальный запуск (RamDll)
+
+Сборка образа (domain — локальный IP машины, где крутится контейнер):
+```bash
+docker build --build-arg domain=192.168.1.196 -t lampa .
+```
+
+Запуск контейнера:
+```bash
+docker run -p 80:80 -d --restart unless-stopped -it --name lampa lampa
+```
+
+Доступ: `http://192.168.1.196`
+
+**Важно:** IP выдаётся по DHCP — если он изменится после переустановки системы/перезагрузки роутера, нужно пересобрать образ с новым `--build-arg domain=`. Чтобы избежать этого, стоит закрепить статический IP за машиной в настройках роутера (DHCP reservation по MAC-адресу).
